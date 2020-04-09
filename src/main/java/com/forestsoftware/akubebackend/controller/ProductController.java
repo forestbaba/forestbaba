@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -129,6 +130,15 @@ public class ProductController {
         return new ResponseEntity(productRepository.findAll(), HttpStatus.OK);
 
     }
+    @GetMapping("/getByCategory/{category}")
+    public ResponseEntity<List<Product>>getByCategory(@PathVariable String category){
+        return new ResponseEntity<>(productRepository.findAllByCategory(category), HttpStatus.OK);
+    }
+//    @GetMapping("/getProductImages/{id}")
+//    public ResponseEntity<List<image>> getProductImages(@PathVariable Long id){
+//        List<image> allImages = imageRepository.findAllByProduct(id);
+//        return new ResponseEntity(allImages, HttpStatus.OK);
+//    }
 }
 
 
