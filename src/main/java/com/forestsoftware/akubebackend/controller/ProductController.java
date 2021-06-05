@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -66,8 +67,7 @@ public class ProductController {
     @PutMapping("/updateOne/{id}")
     public ResponseEntity updateOne(@RequestBody Product product, @PathVariable Long id){
 
-        System.out.println("Item: "+ product);
-//        return  null;
+
        return productRepository.findById(id).map(product1 ->{
             product1.setCategory(product.getCategory());
             product1.setDescription(product.getDescription());
@@ -133,6 +133,15 @@ public class ProductController {
     @GetMapping("/getByCategory/{category}")
     public ResponseEntity<List<Product>>getByCategory(@PathVariable String category){
         return new ResponseEntity<>(productRepository.findAllByCategory(category), HttpStatus.OK);
+    }
+    @PutMapping("/changeVisibility/{productId}")
+    public ResponseEntity changeVisibility(@PathVariable Long productId, @RequestBody Product product){
+        return productRepository.findById(productId).map(instance ->{
+            System.out.println("====="+product);
+            instance.setName(product.getName());
+            instance.setIsAvailable(product.getIsAvailable());
+            return new ResponseEntity(productRepository.save(instance),HttpStatus.OK);
+        }).orElseThrow(()-> new ResourceNotFoundException("Error changing visibility of product: "+productId));
     }
 //    @GetMapping("/getProductImages/{id}")
 //    public ResponseEntity<List<image>> getProductImages(@PathVariable Long id){

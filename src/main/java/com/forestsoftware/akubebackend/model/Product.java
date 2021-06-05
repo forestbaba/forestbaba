@@ -1,6 +1,7 @@
 package com.forestsoftware.akubebackend.model;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -26,5 +27,11 @@ public class Product extends AuditModel{
     public String price;
     public String image;
     public String category;
-//    public MultipartFile productImage;
+    
+    @ColumnDefault("true")
+    public Boolean isAvailable;
+    @ColumnDefault("1")
+    public Integer quantity;
+
+
 }

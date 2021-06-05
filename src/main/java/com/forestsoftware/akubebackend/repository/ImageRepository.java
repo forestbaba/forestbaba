@@ -9,4 +9,5 @@ import java.util.List;
 public interface ImageRepository  extends JpaRepository<image, Long> {
 
     List<image>findByProduct_Id(Long id);
+    List<image>findAllByProduct(Product id);
 }
